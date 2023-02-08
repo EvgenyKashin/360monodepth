@@ -328,7 +328,7 @@ def erp_ico_proj(erp_image, padding_size, tangent_image_width, corr_downsample_f
             # down-sample the pixel corresponding relationship
             if corr_downsample_factor != 1.0 and pixels_corr_dict_subimage[subimage_index_tar] is not None:
                 corr_number = pixels_corr_dict_subimage[subimage_index_tar].shape[0]
-                corr_index = np.linspace(0, corr_number -1, num = int(corr_number * corr_downsample_factor)).astype(np.int)
+                corr_index = np.linspace(0, corr_number -1, num = int(corr_number * corr_downsample_factor)).astype(int)
                 corr_index = np.unique(corr_index)
                 pixels_corr_dict_subimage[subimage_index_tar]  = pixels_corr_dict_subimage[subimage_index_tar][corr_index,:]
             

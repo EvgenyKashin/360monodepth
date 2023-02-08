@@ -492,10 +492,11 @@ def monodepth_360(opt):
             serialization.save_predictions(output_folder, erp_gt_depthmap, erp_rgb_image_data, estimated_depthmap,
                                            opt.persp_monodepth, idx=idx)
 
-            if opt.grid_search:
-                metrics_list.append(list(weights) + [item for dic in pred_metrics for item in dic.values()])
-            else:
-                serialization.save_metrics(output_results_file, pred_metrics, times, times_header,
+            if erp_gt_filepath != "":
+                if opt.grid_search:
+                    metrics_list.append(list(weights) + [item for dic in pred_metrics for item in dic.values()])
+                else:
+                    serialization.save_metrics(output_results_file, pred_metrics, times, times_header,
                                            idx, list(estimated_depthmap.keys()))
 
             # Remove temporal storage folder
@@ -503,7 +504,7 @@ def monodepth_360(opt):
                 shutil.rmtree(debug_output_dir)
             iter += 1
 
-        if opt.grid_search:
+        if opt.grid_search and erp_gt_filepath != "":
             metrics_list = np.array(metrics_list)
             metrics_list = np.mean(metrics_list, axis=0)
             with open(output_results_file, 'a') as f:
