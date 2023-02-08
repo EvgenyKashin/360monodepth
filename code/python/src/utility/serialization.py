@@ -354,9 +354,11 @@ def save_predictions(output_folder, erp_gt_depthmap, erp_rgb_image_data, estimat
 
         plt.imsave(os.path.join(output_folder, "{:03}_360monodepth_{}_{}.png".format(idx, persp_monodepth, key)),
                    pred, cmap="turbo", vmin=vmin, vmax=vmax)
-
-    plt.imsave(os.path.join(output_folder, "{:03}_GT.png".format(idx)),
-               erp_gt_depthmap, vmin=vmin, vmax=vmax, cmap="turbo")
+        np.save(os.path.join(output_folder, "{:03}_360monodepth_{}_{}".format(idx, persp_monodepth, key)),
+                   pred)
+    if erp_gt_depthmap is not None:
+        plt.imsave(os.path.join(output_folder, "{:03}_GT.png".format(idx)),
+                   erp_gt_depthmap, vmin=vmin, vmax=vmax, cmap="turbo")
     plt.imsave(os.path.join(output_folder, "{:03}_rgb.png".format(idx)), erp_rgb_image_data)
 
     # metrics.visualize_error_maps(pred, erp_gt_depthmap, mask, idx=idx,
